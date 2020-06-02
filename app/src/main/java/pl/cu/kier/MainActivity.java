@@ -7,11 +7,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+
+import pl.cu.kier.db.data.local.AppDatabase;
+import pl.cu.kier.db.data.local.Profile;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "cu-kier").allowMainThreadQueries().build();
+        Profile profile = new Profile();
+        profile.name = "Twoja stara";
+        db.profileDao().insertProfile(profile);
+
+        Log.v("njmopedalino", db.profileDao().getAll().get(0).name);
     }
 
     @Override
