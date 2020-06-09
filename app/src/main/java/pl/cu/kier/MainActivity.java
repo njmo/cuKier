@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import pl.cu.kier.db.data.local.AppDatabase;
-import pl.cu.kier.db.data.local.Profile;
+import pl.cu.kier.db.local.AppDatabase;
+import pl.cu.kier.db.local.entities.Profile;
 
 public class MainActivity extends AppCompatActivity {
 
