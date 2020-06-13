@@ -5,10 +5,12 @@ import androidx.room.RoomDatabase;
 
 import pl.cu.kier.db.local.dao.ProfileDao;
 import pl.cu.kier.db.local.dao.RecipeDao;
+import pl.cu.kier.db.local.entities.Product;
 import pl.cu.kier.db.local.entities.Profile;
 import pl.cu.kier.db.local.entities.Recipe;
+import pl.cu.kier.db.local.entities.relations.crossrefs.RecipeProductCrossRef;
 
-@Database(entities = {Profile.class, Recipe.class}, version = 1)
+@Database(entities = {Profile.class, Recipe.class, Product.class, RecipeProductCrossRef.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ProfileDao profileDao();
     public abstract RecipeDao recipeDao();

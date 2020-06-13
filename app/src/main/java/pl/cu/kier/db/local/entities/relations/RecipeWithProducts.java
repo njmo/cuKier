@@ -11,7 +11,6 @@ import pl.cu.kier.db.local.entities.Product;
 import pl.cu.kier.db.local.entities.Recipe;
 import pl.cu.kier.db.local.entities.relations.crossrefs.RecipeProductCrossRef;
 
-@Entity(primaryKeys = {"recipe_id", "product_id"})
 public class RecipeWithProducts {
     @Embedded public Recipe recipe;
     @Relation(

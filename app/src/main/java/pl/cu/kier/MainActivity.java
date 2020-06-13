@@ -15,8 +15,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.cu.kier.db.local.AppDatabase;
+import pl.cu.kier.db.local.entities.Product;
 import pl.cu.kier.db.local.entities.Profile;
+import pl.cu.kier.db.local.entities.Recipe;
+import pl.cu.kier.db.local.entities.relations.RecipeWithProducts;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +46,35 @@ public class MainActivity extends AppCompatActivity {
         profile.name = "Twoja stara";
         db.profileDao().insertProfile(profile);
 
-        Log.v("njmopedalino", db.profileDao().getAll().get(0).name);
+        Recipe recipe = new Recipe();
+        recipe.name = "katamusata";
+
+        List<Product> pr = new ArrayList<Product>();
+
+        Product product = new Product();
+        product.carbohydrate = 12;
+        product.fat = 1;
+        product.fiber = 2;
+        product.protein = 5;
+        pr.add(product);
+
+        Product product2 = new Product();
+        product2.carbohydrate = 13;
+        product2.fat = 1;
+        product2.fiber = 2;
+        product2.protein = 5;
+        pr.add(product2);
+
+        db.recipeDao().insertRecipe(recipe, pr);
+
+        RecipeWithProducts recipeWithProducts2 = db.recipeDao().getAllRecipes().get(0);
+
+        Log.v("njmopedalino", recipeWithProducts2.recipe.name);
+
+        for(Product p : recipeWithProducts2.products)
+        {
+            Log.v("njmopedalino", Float.toString(p.carbohydrate));
+        }
     }
 
     @Override
