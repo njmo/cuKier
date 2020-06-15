@@ -7,6 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import pl.cu.kier.db.local.entities.Dose;
 import pl.cu.kier.db.local.entities.Profile;
 
 @Dao
@@ -15,5 +16,8 @@ public interface ProfileDao {
     public List<Profile> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertProfile(Profile recipe);
+    public long insertProfile(Profile recipe);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void insertDose(Dose dose);
 }

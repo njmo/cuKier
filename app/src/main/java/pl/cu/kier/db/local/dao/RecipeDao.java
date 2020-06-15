@@ -1,7 +1,5 @@
 package pl.cu.kier.db.local.dao;
 
-import android.util.Log;
-
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -12,6 +10,7 @@ import java.util.List;
 
 import pl.cu.kier.db.local.entities.Product;
 import pl.cu.kier.db.local.entities.Recipe;
+import pl.cu.kier.db.local.entities.relations.DoseWithRecipeAndProfileAndProducts;
 import pl.cu.kier.db.local.entities.relations.RecipeWithProducts;
 import pl.cu.kier.db.local.entities.relations.crossrefs.RecipeProductCrossRef;
 
@@ -36,18 +35,19 @@ public abstract class RecipeDao {
     @Query("SELECT * FROM recipes")
     abstract public List<RecipeWithProducts> getAllRecipes();
 
-    public void insertRecipe(Recipe recipe, List<Product> products)
+    public long insertRecipe(Recipe recipe, List<Product> products)
     {
         long r_id = insertRecipe(recipe);
 
         for(Product product : products)
         {
-            long p_id = insertProduct(product);
-
-            RecipeProductCrossRef ref = new RecipeProductCrossRef();
-            ref.product_id = p_id;
-            ref.recipe_id = r_id;
-            insertCrossRef(ref);
+            insertCrossRef(new RecipeProductCrossRef(r_id,
+                                                     insertProduct(product)));
         }
+        return r_id;
     }
+
+    @Transaction
+    @Query("SELECT * from doses")
+    abstract public List<DoseWithRecipeAndProfileAndProducts> getAllDoses();
 }

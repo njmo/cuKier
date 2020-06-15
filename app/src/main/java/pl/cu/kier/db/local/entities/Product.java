@@ -10,6 +10,9 @@ public class Product {
     @ColumnInfo(name = "product_id")
     public long id;
 
+    @ColumnInfo( name = "name")
+    public String name;
+
     @ColumnInfo(name = "fat")
     public float fat;
 

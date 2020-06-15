@@ -18,7 +18,4 @@ public class FingerCheck {
 
     @ColumnInfo(name = "date")
     public Date date;
-
-    @ColumnInfo(name = "time")
-    public Time time;
 }

@@ -21,14 +21,11 @@ public class Dose {
     public long profile_id;
 
     @ColumnInfo(name = "amount")
-    public float amount;
+    public double amount;
 
     @ColumnInfo(name = "portion")
-    public float portion;
+    public double portion;
 
     @ColumnInfo(name = "date")
     public Date date;
-
-    @ColumnInfo(name = "time")
-    public Time time;
 }
