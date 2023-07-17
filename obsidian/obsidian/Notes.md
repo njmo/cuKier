@@ -1,0 +1,4 @@
+- Connect to existing mongo database
+- Create simple meal class
+- Adding new meals
+- Showing all meals
