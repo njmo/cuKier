@@ -1,37 +1,74 @@
+import 'package:cu_kier/database/database.dart';
+import 'package:cu_kier/models/ingredient.dart';
+import 'package:cu_kier/models/treatments.dart';
+import 'package:cu_kier/pages/add_ingredient_page.dart';
+import 'package:cu_kier/pages/recipe_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cu_kier/models/glucose.dart';
+import 'package:mongo_dart/mongo_dart.dart' as M;
+
+import '../models/dose.dart';
 
 class UserCard extends StatelessWidget {
-  const UserCard({super.key, required this.glucose, required this.onTapDelete, required this.onTapEdit});
-  final Glucose glucose;
+  const UserCard({super.key, required this.treatment, required this.onTapDelete, required this.onTapEdit});
+//  final Glucose glucose;
+  final Treatments treatment;
   final void Function()? onTapEdit, onTapDelete;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 2.0,
-      color: Colors.white,
+    return SizedBox(
+      height: 150,
       child: ListTile(
-        leading: Text(
-          '${glucose.sgv}',
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        title: Text(glucose.direction!),
-        subtitle: Text('${DateTime.fromMillisecondsSinceEpoch(glucose.date!.toInt())}'),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              child: Icon(Icons.edit),
-              onTap: onTapEdit,
-            ),
-            GestureDetector(
-              child: Icon(Icons.delete),
-              onTap: onTapDelete,
-            ),
+          shape: const StadiumBorder(
+            side: BorderSide(color: Colors.blue, width: 1),
+          ),
+          leading: Column(
+            children: [
+              const Icon(Icons.vaccines, size: 30,),
+              Text('${treatment.totalInsulin}'),
           ],
-        ),
-      ),
+          ),
+          subtitle: Column (
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+            Text.rich( TextSpan(
+              children: <InlineSpan>[
+              const WidgetSpan(child: Icon(Icons.opacity)),
+                TextSpan(text: '${treatment.glucose}'),
+              ],
+          )),
+            Text.rich( TextSpan(
+            children: <InlineSpan>[
+            const WidgetSpan(child: Icon(Icons.local_dining)),
+            TextSpan(text: '${treatment.carbs}'),
+            ],
+            )),
+          ]),
+          //subtitle: Text('${DateTime.fromMillisecondsSinceEpoch(treatment.date!.toInt())}'),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              InkWell(
+            child: Container(
+                width: 50,
+                height: 50,
+                child: Icon(Icons.help_center_outlined,size: 30,),
+
+              ),
+                onDoubleTap: () {
+                    print("doubletab");
+                },
+                onLongPress: () {
+                  print ("long press");
+                  //MongoDatabase.insertIngredient(Ingredient("pepsi", 50, 10, 15, 8 ,M.ObjectId(), 100));
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                      return AddIngredientWidget();
+                  }));
+                },
+              )],
+          ),
+          ),
     );
   }
 }

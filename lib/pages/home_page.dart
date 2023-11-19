@@ -1,9 +1,10 @@
+import 'package:cu_kier/pages/recipe_page.dart';
 import 'package:flutter/material.dart';
-import 'package:cu_kier/pages/add_user_page.dart';
 import 'package:cu_kier/database/database.dart';
-import 'package:cu_kier/models/user.dart';
 import 'package:cu_kier/models/glucose.dart';
 import 'package:cu_kier/components/user_card.dart';
+
+import '../models/treatments.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,8 +21,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //MongoDatabase.getTreatments();
     return FutureBuilder(
-        future: MongoDatabase.getDocuments(),
+        future: MongoDatabase.getTreatments(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
@@ -44,26 +46,34 @@ class _HomePageState extends State<HomePage> {
             } else {
               return Scaffold(
                 appBar: AppBar(
-                  title: Text('MongoDB Flutter'),
+                  title: Text('MongoDB Flutter')
+                ),
+                drawer: Drawer(
+                    child: ListView(
+                      // Important: Remove any padding from the ListView.
+                      padding: EdgeInsets.zero,
+                      children: const [
+                          DrawerHeader(
+                            decoration: BoxDecoration(
+                            color: Colors.blue,
+                            ),
+                          child: Text('Drawer Header'),
+                          ),
+                        ListTile(
+                          title: Text("Cukry")
+                        )
+                      ]
+                    ),
                 ),
                 body: ListView.builder(
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: UserCard(
-                        glucose: Glucose.fromMap(snapshot.data![index]),
+                        treatment: Treatments.fromMap(snapshot.data![index]),
                         onTapDelete: () async {
-                          //_deleteUser(User.fromMap(snapshot.data![index]));
                         },
                         onTapEdit: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return AddUserPage(user: User.fromMap(snapshot.data![index]));
-                              },
-                            ),
-                          ).then((value) => setState(() { }));
                         },
                       ),
                     );
@@ -74,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (BuildContext context) {
-                          return AddUserPage();
+                          return RecipePageWidget();
                         })).then((value) => setState(() {}));
                   },
                   child: Icon(Icons.add),
