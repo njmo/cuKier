@@ -157,7 +157,8 @@ class _AddIngredientWidgetState extends State<AddIngredientWidget> {
                   // Process data.
                   _formKey.currentState!.save();
                   print(ingredient.toMap());
-                  //MongoDatabase.insertIngredient(ingredient);
+                  MongoDatabase.insertIngredient(ingredient);
+                  Navigator.pop(context);
                 }
               },
               child: const Text('Submit'),

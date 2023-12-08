@@ -59,12 +59,11 @@ class UserCard extends StatelessWidget {
                 onDoubleTap: () {
                     print("doubletab");
                 },
-                onLongPress: () {
-                  print ("long press");
-                  //MongoDatabase.insertIngredient(Ingredient("pepsi", 50, 10, 15, 8 ,M.ObjectId(), 100));
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                      return AddIngredientWidget();
+                onTap: () async {
+                  final result = await Navigator.push<List<Ingredient>>(context, MaterialPageRoute(builder: (BuildContext context) {
+                      return RecipePageWidget();
                   }));
+                  print(result.toString());
                 },
               )],
           ),

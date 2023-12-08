@@ -80,15 +80,6 @@ class _HomePageState extends State<HomePage> {
                   },
                   itemCount: snapshot.data?.length,
                 ),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return RecipePageWidget();
-                        })).then((value) => setState(() {}));
-                  },
-                  child: Icon(Icons.add),
-                ),
               );
             }
           }
