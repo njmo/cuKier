@@ -16,23 +16,13 @@ class _RecipePageState  extends State<RecipePageWidget> {
   List<Ingredient> ingredients = [];
 
   void ingredientPress(Ingredient ingredient) {
-    setState(() {
       if (ingredients.contains(ingredient))
       {
-        ingredients.remove(ingredient);;
+        ingredients.remove(ingredient);
       }
       else {
         ingredients.add(ingredient);
       }
-    });
-  }
-
-  Icon isInList(Ingredient ingredient) {
-    if (ingredients.contains(ingredient))
-    {
-      return const Icon(Icons.check_box_outlined);
-    }
-    return const Icon(Icons.check_box_outline_blank_rounded);
   }
 
   @override
@@ -64,7 +54,6 @@ class _RecipePageState  extends State<RecipePageWidget> {
                       return IngredientCard(
                           ingredient: Ingredient.fromMap(snapshot.data![index]),
                           onPressed_: ingredientPress,
-                          isAdded_: isInList,
                       );
                     },
                     itemCount: snapshot.data?.length),
